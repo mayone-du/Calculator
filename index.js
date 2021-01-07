@@ -13,7 +13,7 @@
     }
 
     delete() {
-
+      this.$currOperand.textContent = this.$currOperand.textContent.slice(0, -1);
     }
 
     appendNumber(number) {
@@ -24,7 +24,8 @@
       this.$currOperand.textContent = this.$currOperand.textContent + number;
     }
 
-    chooseOpration() {
+    chooseOpration(operation) {
+      if (this.$currOperand.textContent === "") return;
 
     }
 
@@ -55,10 +56,22 @@
     calculator.clear();
   })
 
+  // DELボタンを押したときの処理
+  $delBtn.addEventListener("click", function() {
+    calculator.delete();
+  })
 
+  // 数字のボタンを押したときの処理
   $numBtns.forEach(button => {
     button.addEventListener("click", function() {
       calculator.appendNumber(button.textContent);
+    })
+  })
+
+  // 四則演算のボタンを押したときの処理
+  $opeBtns.forEach(button => {
+    button.addEventListener("click", function() {
+      calculator.chooseOpration(button.textContent);
     })
   })
 
