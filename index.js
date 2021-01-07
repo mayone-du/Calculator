@@ -1,0 +1,5 @@
+(() => {
+
+  const $doc = document;
+
+})();
