@@ -17,6 +17,7 @@
     }
 
     appendNumber(number) {
+      this.number = number;
       // 小数点がクリックされ、かつすでに含まれていたら処理を中断する
       if (number === "." && this.$currOperand.textContent.includes(".")) return;
       // 0がクリックされ、currOperandの1文字目が0かつ、小数点が含まれていないければ処理を中断する
@@ -26,11 +27,55 @@
 
     chooseOpration(operation) {
       if (this.$currOperand.textContent === "") return;
-
+      this.operation = operation;
+      this.$prevOperand.textContent = `${this.$currOperand.textContent} ${operation}`
+      this.$currOperand.textContent = "";
     }
 
-    updateDisplay() {
+    calculation() {
 
+      // リファクタリング前
+      // if (this.$prevOperand.textContent === "" || this.$currOperand.textContent === "") return;
+      // if (this.operation === "÷") {
+      //   const result = parseFloat($prevOperand.textContent) / parseFloat($currOperand.textContent);
+      //   this.$currOperand.textContent = result;
+      // }
+      // if (this.operation === "×") {
+      //   const result = parseFloat($prevOperand.textContent) * parseFloat($currOperand.textContent);
+      //   this.$currOperand.textContent = result;
+      // }
+      // if (this.operation === "-") {
+      //   const result = parseFloat($prevOperand.textContent) - parseFloat($currOperand.textContent);
+      //   this.$currOperand.textContent = result;
+      // }
+      // if (this.operation === "+") {
+      //   const result = parseFloat($prevOperand.textContent) + parseFloat($currOperand.textContent);
+      //   this.$currOperand.textContent = result;
+      // }
+
+      // リファクタリング後
+      switch (this.operation) {
+        case "+":
+          this.$currOperand.textContent = parseFloat($prevOperand.textContent) + parseFloat($currOperand.textContent);
+          break;
+
+        case "-":
+          this.$currOperand.textContent = parseFloat($prevOperand.textContent) - parseFloat($currOperand.textContent);
+          break;
+
+        case "×":
+          this.$currOperand.textContent = parseFloat($prevOperand.textContent) * parseFloat($currOperand.textContent);
+          break;
+
+        case "÷":
+          this.$currOperand.textContent = parseFloat($prevOperand.textContent) / parseFloat($currOperand.textContent);
+          break;
+
+        default:
+          return;
+      }
+
+      this.$prevOperand.textContent = `${parseFloat($prevOperand.textContent)} ${this.operation} ${parseFloat(this.number)} =`;
     }
 
 
@@ -75,6 +120,10 @@
     })
   })
 
+  // イコールボタンを押したときの処理
+  $equalbtn.addEventListener("click", function() {
+    calculator.calculation();
+  })
 
 
 })();
