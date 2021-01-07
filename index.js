@@ -8,12 +8,20 @@
     }
 
     clear() {
-      this.$prevOperand.innerText = "";
-      this.$currOperand.innerText = "";
+      this.$prevOperand.textContent = "";
+      this.$currOperand.textContent = "";
     }
 
     delete() {
 
+    }
+
+    appendNumber(number) {
+      // 小数点がクリックされ、かつすでに含まれていたら処理を中断する
+      if (number === "." && this.$currOperand.textContent.includes(".")) return;
+      // 0がクリックされ、currOperandの1文字目が0かつ、小数点が含まれていないければ処理を中断する
+      if (number === "0" && this.$currOperand.textContent.slice(0,1) === "0" && !this.$currOperand.textContent.includes(".")) return;
+      this.$currOperand.textContent = this.$currOperand.textContent + number;
     }
 
     chooseOpration() {
@@ -47,6 +55,12 @@
     calculator.clear();
   })
 
+
+  $numBtns.forEach(button => {
+    button.addEventListener("click", function() {
+      calculator.appendNumber(button.textContent);
+    })
+  })
 
 
 
