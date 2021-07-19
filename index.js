@@ -54,6 +54,8 @@
       // }
 
       // リファクタリング後
+
+      this.num = $currOperand.textContent;
       switch (this.operation) {
         case "+":
           this.$currOperand.textContent = parseFloat($prevOperand.textContent) + parseFloat($currOperand.textContent);
@@ -75,7 +77,7 @@
           return;
       }
 
-      this.$prevOperand.textContent = `${parseFloat($prevOperand.textContent)} ${this.operation} ${parseFloat(this.number)} =`;
+      this.$prevOperand.textContent = `${this.$prevOperand.textContent} ${this.num} =`;
     }
 
 
